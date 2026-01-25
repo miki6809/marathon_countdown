@@ -1,2 +1,2 @@
-# marathon_cuountdown
+# marathon_countdown
 内之浦銀河マラソンのスタート音声送出プログラム
