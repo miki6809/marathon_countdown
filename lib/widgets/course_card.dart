@@ -259,25 +259,38 @@ class _CourseCardState extends State<CourseCard> {
               ],
             ),
 
-            const SizedBox(height: 8), //16
+            //const SizedBox(height: 16), //16
             // Status & Progress
             if (widget.state.isRunning) ...[
-              Text(
-                displayDiff > 0 ? "待機中（再生まで $displayDiff秒）" : "再生中",
-                style: TextStyle(color: color, fontWeight: FontWeight.bold),
+              Row(
+                children: [
+                  // 1. テキスト（幅を固定しないならそのまま）
+                  Text(
+                    displayDiff > 0 ? "待機中（再生まで $displayDiff秒）" : "再生中",
+                    style: TextStyle(color: color, fontWeight: FontWeight.bold),
+                  ),
+
+                  const SizedBox(width: 12), // テキストとバーの間の隙間
+                  // 2. プログレスバー（Expandedで残りの横幅をすべて使う）
+                  Expanded(
+                    child: ClipRRect(
+                      // 角を丸くするときれいに見えます
+                      borderRadius: BorderRadius.circular(8),
+                      child: LinearProgressIndicator(
+                        value: progress,
+                        minHeight: 16,
+                        color: progressColor,
+                        backgroundColor: Colors.grey[200],
+                        // 中のバーの先端を丸くする（Flutterの比較的新しいバージョンで利用可能）
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              //const SizedBox(height: 4),
-              LinearProgressIndicator(
-                value: progress,
-                minHeight: 12, //16
-                color: progressColor,
-                backgroundColor: Colors.grey[200],
-              ),
-              const SizedBox(height: 4), //12
+              const SizedBox(height: 12),
             ] else
-              const SizedBox(
-                height: 37, //32
-              ), // Placeholder to keep height somewhat consistent or spacing
+              const SizedBox(height: 32),
             // Start/Stop Button
             SizedBox(
               width: double.infinity,
