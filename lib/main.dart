@@ -159,10 +159,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        toolbarHeight: 100, // Taller app bar for the clock
+        toolbarHeight: 80, // Taller app bar for the clock
         title: Column(
           children: [
-            const Text("現在時刻（業者時計と同期）", style: TextStyle(fontSize: 20)),
+            const Text("現在時刻（計測業者との同期用）", style: TextStyle(fontSize: 20)),
             Text(
               DateFormat('HH:mm:ss').format(_currentTime),
               style: TextStyle(
@@ -189,19 +189,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          "共通音声",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          "カウントダウン音声",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
                         ),
                         Text(
                           _globalAudioPath != null ? "設定済 ✅" : "ファイルを選択してください",
-                          style: const TextStyle(fontSize: 12),
+                          style: const TextStyle(fontSize: 20),
                         ),
                       ],
                     ),
                   ),
                   ElevatedButton(
                     onPressed: _pickAudioFile,
-                    child: const Text("選択"),
+                    child: const Text("選択", style: TextStyle(fontSize: 24)),
                   ),
                   const SizedBox(width: 8),
                   if (_globalAudioPath != null)
@@ -217,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       backgroundColor: Colors.grey[800],
                       foregroundColor: Colors.white,
                     ),
-                    child: const Text("全停止"),
+                    child: const Text("全停止", style: TextStyle(fontSize: 24)),
                   ),
                 ],
               ),

@@ -191,7 +191,7 @@ class _CourseCardState extends State<CourseCard> {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            // const SizedBox(height: 16),
 
             // Time Info
             Row(
@@ -199,26 +199,26 @@ class _CourseCardState extends State<CourseCard> {
               children: [
                 Text(
                   "案内: ${_formatTimeOfDay(widget.state.initialStartTime)}",
-                  style: const TextStyle(color: Colors.grey, fontSize: 14),
+                  style: const TextStyle(color: Colors.blueGrey, fontSize: 20),
                 ),
                 Text(
                   "設定(正時): ${_formatTimeOfDay(widget.state.startTime)}",
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                    fontSize: 20,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
 
+            // const SizedBox(height: 8),
             const Text(
               "動作時刻(50秒前)",
               style: TextStyle(
                 color: Colors.red,
                 fontWeight: FontWeight.bold,
-                fontSize: 12,
+                fontSize: 16,
               ),
             ),
             Row(
@@ -254,35 +254,34 @@ class _CourseCardState extends State<CourseCard> {
                       widget.onUpdate(widget.state.copyWith(startTime: picked));
                     }
                   },
-                  child: const Text("変更"),
+                  child: const Text("変更", style: TextStyle(fontSize: 24)),
                 ),
               ],
             ),
 
-            const SizedBox(height: 16),
-
+            const SizedBox(height: 8), //16
             // Status & Progress
             if (widget.state.isRunning) ...[
               Text(
                 displayDiff > 0 ? "待機中（再生まで $displayDiff秒）" : "再生中",
                 style: TextStyle(color: color, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 4),
+              //const SizedBox(height: 4),
               LinearProgressIndicator(
                 value: progress,
-                minHeight: 16,
+                minHeight: 12, //16
                 color: progressColor,
                 backgroundColor: Colors.grey[200],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 4), //12
             ] else
               const SizedBox(
-                height: 32,
+                height: 37, //32
               ), // Placeholder to keep height somewhat consistent or spacing
             // Start/Stop Button
             SizedBox(
               width: double.infinity,
-              height: 60,
+              height: 48, //60
               child: ElevatedButton(
                 onPressed:
                     (_isEditingName ||
