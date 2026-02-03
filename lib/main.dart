@@ -52,27 +52,27 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<CourseState> _courses = [
     CourseState(
       id: 1,
-      customName: "1.2km（太陽）コース",
-      startTime: const TimeOfDay(hour: 12, minute: 0),
-      initialStartTime: const TimeOfDay(hour: 12, minute: 0),
+      customName: "3km（木星）コース",
+      startTime: const TimeOfDay(hour: 10, minute: 15),
+      initialStartTime: const TimeOfDay(hour: 10, minute: 15),
     ),
     CourseState(
       id: 2,
-      customName: "5km（彗星）コース",
-      startTime: const TimeOfDay(hour: 11, minute: 0),
-      initialStartTime: const TimeOfDay(hour: 11, minute: 0),
-    ),
-    CourseState(
-      id: 3,
       customName: "10km（銀河）コース",
       startTime: const TimeOfDay(hour: 10, minute: 18),
       initialStartTime: const TimeOfDay(hour: 10, minute: 18),
     ),
     CourseState(
+      id: 3,
+      customName: "5km（彗星）コース",
+      startTime: const TimeOfDay(hour: 11, minute: 0),
+      initialStartTime: const TimeOfDay(hour: 11, minute: 0),
+    ),
+    CourseState(
       id: 4,
-      customName: "3km（木星）コース",
-      startTime: const TimeOfDay(hour: 10, minute: 15),
-      initialStartTime: const TimeOfDay(hour: 10, minute: 15),
+      customName: "1.2km（太陽）コース",
+      startTime: const TimeOfDay(hour: 12, minute: 0),
+      initialStartTime: const TimeOfDay(hour: 12, minute: 0),
     ),
   ];
 
