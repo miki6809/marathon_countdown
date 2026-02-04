@@ -130,12 +130,12 @@ class _CourseCardState extends State<CourseCard> {
         playbackStartTime.difference(now).inMilliseconds / 1000.0;
     final displayDiff = preciseDiff.ceil().clamp(0, double.infinity).toInt();
 
-    // Progress for 50 seconds
-    // 0 to 50 seconds remaining
-    double progress = 0.0;
+    // Progress for 60 seconds
+    // 0 to 60 seconds remaining
+    double progress = 1.0;
     if (widget.state.isRunning) {
-      if (preciseDiff > 0 && preciseDiff <= 50) {
-        progress = (50.0 - preciseDiff) / 50.0;
+      if (preciseDiff > 0 && preciseDiff <= 60) {
+        progress = (preciseDiff) / 60.0;
       } else if (preciseDiff <= 0) {
         progress = 1.0;
       }
@@ -276,13 +276,16 @@ class _CourseCardState extends State<CourseCard> {
                     child: ClipRRect(
                       // 角を丸くするときれいに見えます
                       borderRadius: BorderRadius.circular(8),
-                      child: LinearProgressIndicator(
-                        value: progress,
-                        minHeight: 16,
-                        color: progressColor,
-                        backgroundColor: Colors.grey[200],
-                        // 中のバーの先端を丸くする（Flutterの比較的新しいバージョンで利用可能）
-                        borderRadius: BorderRadius.circular(8),
+                      child: Transform.flip(
+                        flipX: true, // 横方向を反転
+                        child: LinearProgressIndicator(
+                          value: progress, // 右に向かって減算されるイメージに修正
+                          minHeight: 16,
+                          color: progressColor,
+                          backgroundColor: Colors.grey[200],
+                          // 中のバーの先端を丸くする（Flutterの比較的新しいバージョンで利用可能）
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
                     ),
                   ),
