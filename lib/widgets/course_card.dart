@@ -301,7 +301,10 @@ class _CourseCardState extends State<CourseCard> {
               child: ElevatedButton(
                 onPressed:
                     (_isEditingName ||
-                        (!widget.state.isRunning && now.isAfter(startTimeDate)))
+                        (!widget.state.isRunning &&
+                            now.isAfter(
+                              playbackStartTime,
+                            ))) // カウントダウンの再生が始まったら、二重再生しないようにした
                     ? null
                     : () {
                         widget.onUpdate(
