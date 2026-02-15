@@ -303,7 +303,7 @@ class _CourseCardState extends State<CourseCard> {
                     (_isEditingName ||
                         (!widget.state.isRunning &&
                             now.isAfter(
-                              playbackStartTime,
+                              playbackStartTime
                             ))) // カウントダウンの再生が始まったら、二重再生しないようにした
                     ? null
                     : () {
