@@ -137,7 +137,7 @@ class _CourseCardState extends State<CourseCard> {
       if (preciseDiff > 0 && preciseDiff <= 60) {
         progress = (preciseDiff) / 60.0;
       } else if (preciseDiff <= 0) {
-        progress = 1.0;
+        progress = 0.0;
       }
     }
 
@@ -303,7 +303,7 @@ class _CourseCardState extends State<CourseCard> {
                     (_isEditingName ||
                         (!widget.state.isRunning &&
                             now.isAfter(
-                              playbackStartTime
+                              playbackStartTime,
                             ))) // カウントダウンの再生が始まったら、二重再生しないようにした
                     ? null
                     : () {
