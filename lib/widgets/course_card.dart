@@ -70,11 +70,12 @@ class _CourseCardState extends State<CourseCard> {
     _checkAutoPlay();
   }
 
+  // 自動再生のチェック
   void _checkAutoPlay() {
     if (!widget.state.isRunning) return;
 
     final now = widget.currentTime;
-    // Calculate target play time (50 seconds before start time)
+    // 出走予定時刻（正時）をDateTimeオブジェクトに変換
     final DateTime startTimeDate = DateTime(
       now.year,
       now.month,
@@ -83,28 +84,20 @@ class _CourseCardState extends State<CourseCard> {
       widget.state.startTime.minute,
     );
 
-    // If start time is earlier today (e.g. it's 13:00 and start was 12:00),
-    // we might assume it's tomorrow, but for this simple app we assume same day logic
-    // or simply check if it's already passed.
-    // However, the original Kotlin logic compares directly.
-
+    // 再生開始時刻を算出（50秒前）
     final playbackStartTime = startTimeDate.subtract(
       const Duration(seconds: 50),
     );
 
-    // Kotlin logic: if (state.isRunning && !currentTime.isBefore(playbackStartTime))
-    // Meaning: It is running AND current time is NOT before playback start time (so it is AT or AFTER playback start time)
+    // カウントダウン実行中で、かつ現在時刻が再生開始時刻に達している場合
     if (!now.isBefore(playbackStartTime)) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        // Ensure widget is still in the tree
         if (!mounted) return;
 
-        // Double check running state to be safe (though logic usually prevents re-entry)
-        // Note: widget.state might have changed if a rebuild happened before this callback,
-        // but typically this callback runs immediately after the current build frame.
         if (widget.state.isRunning) {
+          // メイン画面（Home）に音声再生を要求
           widget.onPlayRequested();
-          // Stop running after play trigger
+          // 再生が始まったら自動的に「停止」状態（isRunning = false）にする
           widget.onUpdate(widget.state.copyWith(isRunning: false));
         }
       });
@@ -125,13 +118,12 @@ class _CourseCardState extends State<CourseCard> {
       const Duration(seconds: 50),
     );
 
-    // Calculate difference in seconds
+    // 再生開始時刻までの秒数を算出（小数精度の差分を切り上げ）
     final preciseDiff =
         playbackStartTime.difference(now).inMilliseconds / 1000.0;
     final displayDiff = preciseDiff.ceil().clamp(0, double.infinity).toInt();
 
-    // Progress for 60 seconds
-    // 0 to 60 seconds remaining
+    // 60秒前からの進捗率（プログレスバー表示用）
     double progress = 1.0;
     if (widget.state.isRunning) {
       if (preciseDiff > 0 && preciseDiff <= 60) {
@@ -294,17 +286,15 @@ class _CourseCardState extends State<CourseCard> {
               const SizedBox(height: 12),
             ] else
               const SizedBox(height: 32),
-            // Start/Stop Button
+            // カウント開始/停止ボタン
             SizedBox(
               width: double.infinity,
               height: 48, //60
               child: ElevatedButton(
-                onPressed:
-                    (_isEditingName ||
-                        (!widget.state.isRunning &&
-                            now.isAfter(
-                              playbackStartTime,
-                            ))) // カウントダウンの再生が始まったら、二重再生しないようにした
+                // 以下の条件でボタンを無効化（nullを設定）
+                // 1. 名前を編集中の場合
+                // 2. 現在時刻がカウントダウン開始時刻（50秒前）に達している場合（誤操作・二重再生防止）
+                onPressed: (_isEditingName || !now.isBefore(playbackStartTime))
                     ? null
                     : () {
                         widget.onUpdate(
